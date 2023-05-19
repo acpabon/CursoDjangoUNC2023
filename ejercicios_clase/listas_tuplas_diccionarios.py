@@ -6,10 +6,12 @@ colores = ('amarillo', 'azul', 'rojo')
 
 # diccionario de datos del pais
 datos = {
+    "Capital": "Bogota",
     "Gentilicio": 'Colombiano',
-    "poblacion": '52215503',
-    "idioma": 'español',
-    "dominio": '.co'
+    "Poblacion": 52215503,
+    "Idioma": 'español',
+    "Dominio": '.co',
+    "Ciudades_principales": ["Bogota", "Cali", "Barranquilla", "Medellín", "Bucaramanga"]
 }
 
 print(simbolos)
@@ -22,3 +24,4 @@ print()
 
 print(datos)
 print(type(datos))
+print(datos['Ciudades_principales'][0])
