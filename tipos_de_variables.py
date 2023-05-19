@@ -6,6 +6,6 @@ altura = 1.8
 print("Altura: " + str(altura) + " metros")
 print(type(altura))
 
-nombre = "Andres Camilo Pabón Aguilar"
+nombre = "Andres P"
 print("Nombre: " + nombre)
 print(type(nombre))
