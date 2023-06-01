@@ -21,5 +21,7 @@ from myapp import views
 app_name = "app"
 urlpatterns = [
     path('', views.index),
-    path('index2', views.index_2)
+    path('index2', views.index_2), 
+    path('lists_persons', views.lists_persons), 
+    path('lists_pets', views.lists_pets)
 ]

@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 
 # Create your models here.
 class Participant(models.Model):
@@ -20,4 +19,3 @@ class Schedule(models.Model):
 
     def __str__(self) -> str:
         return "{}".format(self.description[0:30] + "...")
-
