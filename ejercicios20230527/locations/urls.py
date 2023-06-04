@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from locations import views
 
 app_name = "locations"
 urlpatterns = [
+    path('locations', views.all), 
+    path('locations/departamentos', views.departamentos),
+    path('locations/departamentos/<str:name_department>', views.ciudades),
+    path('locations/departamentos/<str:name_department>/<str:name_city>', views.barrios),
 ]

@@ -8,14 +8,15 @@ class Department(models.Model):
         return "{}".format(self.name)
 
 class City(models.Model):
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    department_id = models.ForeignKey(Department, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
 
     def __str__(self) -> str:
-        return "{} - {}".format(self.department, self.name)
+        # return "{} - {}".format(self.department, self.name)
+        return "{}".format(self.name)
 
 class District(models.Model):
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    city_id = models.ForeignKey(City, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
 
     def __str__(self) -> str:

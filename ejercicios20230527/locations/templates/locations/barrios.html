@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title_content %} 
+    Listado de barrios por Ciudad
+    <br/ >
+    {{ city }}
+{% endblock %}
+{% block content %}
+    {% if display %}
+        <div class="row">
+            <div class="col col-4">
+                <ul class="list-group"> 
+                    {% for d in distrits %}
+                        <li class="list-group-item">
+                            {{ d }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No existen registros para mostrar
+        </div>
+    {% endif %}
+{% endblock %}
