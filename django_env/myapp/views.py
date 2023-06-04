@@ -1,10 +1,10 @@
 from django.shortcuts import render, HttpResponse
 from django.template import loader
+from django.http import JsonResponse
 
-from myapp.models import Person, Pet
+from myapp.models import Person, Pet, Specie, Observation
 
 # Create your views here.
-template_name_list = 'myapp/lists.html'
 
 def index(request):
     persons = Person.objects.all()
@@ -35,11 +35,11 @@ def lists_persons(request):
         list_persons.append(name_person)
     
     context = {
-        "list_name": "Personas",
         "list": list_persons
     }
+    template_name = 'myapp/person_list.html'
 
-    return render(request, template_name_list, context)
+    return render(request, template_name, context)
 
 def lists_pets(request):
     pets = Pet.objects.all()
@@ -49,8 +49,98 @@ def lists_pets(request):
         lists_pets.append([p.name, p.age, p.person, p.specie])
 
     context = {
-        "list_name": "Mascotas",
-        "list": lists_pets
+        "lists": lists_pets
     }
 
-    return render(request, template_name_list, context)
+    template_name = 'myapp/pet_list.html'
+
+    return render(request, template_name, context)
+
+def detail_person(request, id):
+    person = Person.objects.filter(id=id).first()
+
+    if person:
+        context = {
+            "display": True, 
+            "nombre": person.first_name + " " + person.last_name, 
+            "edad": person.edad, 
+            "nick_name": person.nick_name
+        }
+    else:
+        context = {
+            "display": False
+        }
+    
+    template_name = 'myapp/person_detail.html'
+
+    return render(request, template_name, context)
+
+def detail_pet(request, name):
+    pet = Pet.objects.filter(name__iexact = name.lower()).first()
+
+    if pet:
+        context = {
+            "display": True, 
+            "nombre": pet.name,
+            "edad": pet.age, 
+            "especie": pet.specie,
+            "dueno": pet.person
+        }
+    else:
+        context = {
+            "display": False
+        }
+    
+    template_name = 'myapp/pet_detail.html'
+
+    return render(request, template_name, context)
+
+def detail_pet_observation(request, name):
+    pet = Pet.objects.filter(name__iexact = name.lower()).first()
+
+    if pet:
+        observations = Observation.objects.filter(pet = pet.id).all()
+        context = {
+            "display": True, 
+            "nombre": pet.name,
+            "edad": pet.age, 
+            "especie": pet.specie,
+            "dueno": pet.person,
+            "observaciones": observations
+        }
+    else:
+        context = {
+            "display": False
+        }
+    
+    template_name = 'myapp/pet_detail_observation.html'
+
+    return render(request, template_name, context)
+
+def detail_specie(request, id):
+    specie = Specie.objects.filter(id = id).first()
+
+    if specie:
+        texto_respuesta = """
+            <h1>Datos de la especie: {}</h1>
+            <p>Tipo: {}</p>
+        """.format(specie.name, specie.get_kind_display())
+    else:
+        texto_respuesta = """
+            <h1>No se encuentra información de la especie con id: {}</h1>
+        """.format(id)
+    return HttpResponse(texto_respuesta)
+
+def lists_persons_json(request):
+    persons = Person.objects.all()
+
+    list_persons = []
+    for p in persons:
+        name_person = "{} {}".format(p.first_name, p.last_name)
+        list_persons.append(name_person)
+    
+    context = {
+        "list": list_persons
+    }
+
+    return JsonResponse(context)

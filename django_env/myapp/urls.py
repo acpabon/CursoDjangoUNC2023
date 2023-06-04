@@ -22,6 +22,14 @@ app_name = "app"
 urlpatterns = [
     path('', views.index),
     path('index2', views.index_2), 
+
     path('lists_persons', views.lists_persons), 
-    path('lists_pets', views.lists_pets)
+    path('lists_persons_json', views.lists_persons_json), 
+    path('person/<int:id>', views.detail_person), 
+    
+    path('lists_pets', views.lists_pets),
+    path('pet/<str:name>', views.detail_pet), 
+    path('pet/<str:name>/observation', views.detail_pet_observation), 
+    
+    path('specie/<int:id>', views.detail_specie), 
 ]
