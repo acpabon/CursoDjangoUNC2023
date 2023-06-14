@@ -4,22 +4,30 @@ from django.http import JsonResponse
 
 from myapp.models import Person, Pet, Specie, Observation
 
+from rest_framework import viewsets, permissions
+from .serializers import MascotaSerializer, EspecieSerializer
+
 # Create your views here.
 
 def index(request):
-    persons = Person.objects.all()
-    list_person = []
+    # persons = Person.objects.all()
+    # list_person = []
 
-    for person in persons:
-        name_person = "{} {}".format(person.first_name, person.last_name)
-        list_person.append(name_person)
+    # for person in persons:
+    #     name_person = "{} {}".format(person.first_name, person.last_name)
+    #     list_person.append(name_person)
 
-    list_person = ['---']
-    texto_respuesta = """
-        <h1>Hola mundo</h1>
-        {}
-    """.format(list_person)
-    return HttpResponse(texto_respuesta)
+    # list_person = ['---']
+    # texto_respuesta = """
+    #     <h1>Hola mundo</h1>
+    #     {}
+    # """.format(list_person)
+    # return HttpResponse(texto_respuesta)
+    context = {
+    }
+    template_name = 'myapp/index.html'
+
+    return render(request, template_name, context)
 
 def index_2(request):
     template = 'myapp/index.html'
@@ -32,7 +40,10 @@ def lists_persons(request):
     list_persons = []
     for p in persons:
         name_person = "{} {}".format(p.first_name, p.last_name)
-        list_persons.append(name_person)
+        list_persons.append({
+            'id': p.id,
+            'name_p': name_person
+        })
     
     context = {
         "list": list_persons
@@ -56,11 +67,29 @@ def lists_pets(request):
 
     return render(request, template_name, context)
 
+def list_pets_persons(request, id):
+    person = Person.objects.filter(id = id).first()
+
+    pets = Pet.objects.filter(person = person.id).all()
+
+    lists_pets = []
+    for p in pets:
+        lists_pets.append([p.name, p.age, p.person, p.specie])
+
+    context = {
+        "lists": lists_pets
+    }
+
+    template_name = 'myapp/pet_list.html'
+
+    return render(request, template_name, context)
+
 def detail_person(request, id):
     person = Person.objects.filter(id=id).first()
 
     if person:
         context = {
+            "id": person.id, 
             "display": True, 
             "nombre": person.first_name + " " + person.last_name, 
             "edad": person.edad, 
@@ -106,6 +135,7 @@ def detail_pet_observation(request, name):
             "edad": pet.age, 
             "especie": pet.specie,
             "dueno": pet.person,
+            "id": pet.person.id,
             "observaciones": observations
         }
     else:
@@ -144,3 +174,13 @@ def lists_persons_json(request):
     }
 
     return JsonResponse(context)
+
+class MascotaViewSet(viewsets.ModelViewSet):
+    queryset = Pet.objects.all()
+    serializer_class = MascotaSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class EspecieViewSet(viewsets.ModelViewSet):
+    queryset = Specie.objects.all()
+    serializer_class = EspecieSerializer
+    permission_classes = [permissions.IsAuthenticated]

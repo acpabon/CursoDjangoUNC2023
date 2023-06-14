@@ -1,1 +1,26 @@
-<h1>Hola mundo 2</h1>
+{% extends 'base.html' %}
+{% block content %}
+    <h3>Menú de opciones</h3>
+    <ul>
+        <li>
+            Personas
+            <ul>
+                <li>
+                    <a href="{% url 'app:lists_persons' %}">
+                        Lista de personas
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            Mascotas
+            <ul>
+                <li>
+                    <a href="{% url 'app:lists_pets' %}">
+                        Lista de mascotas
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+{% endblock %}

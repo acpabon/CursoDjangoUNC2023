@@ -6,7 +6,9 @@
             <ul class="list-group">
                 {% for d in departments %}
                     <li class="list-group-item">
-                        {{ d }}
+                        <a href="/locations/departamentos/{{ d }}">
+                            {{ d }}
+                        </a>
                     </li>
                 {% endfor %}
             </ul>

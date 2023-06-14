@@ -1,17 +1,12 @@
 <ul class="nav justify-content-center">
     <li class="nav-item">
-        <a class="nav-link active" href="https://google.com">
-            Google
+        <a class="nav-link active" href="{% url 'app:lists_persons' %}">
+            Listado de personas
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="https://youtube.com">
-            YouTube
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="https://gmail.com">
-            Gmail
+        <a class="nav-link" href="{% url 'app:lists_pets' %}">
+            Listado de mascotas
         </a>
     </li>
 </ul>

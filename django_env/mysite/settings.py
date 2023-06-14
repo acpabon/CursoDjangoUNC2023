@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'myapp.apps.MyappConfig'
+    'myapp.apps.MyappConfig',
+
+    'rest_framework',
+    'rest_framework_jwt',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -49,7 +54,29 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication', 
+    ),
+}
+
+JWT_AUTH = {
+    'JWT_SECRET_KEY': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2NjI1MTM1LCJpYXQiOjE2ODY2MjQ4MzUsImp0aSI6IjU4YzZkYzgzYzhkYzQwYWJhMTAyOTJkNmU0MDYwYWRjIiwidXNlcl9pZCI6MX0.Z9REt3xfinX63PhMqA9_UQsJ-jDNEGsmA2MX9rfSomg',  # Cambia esto por tu clave secreta
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',  # Cambia esto por la URL de tu aplicación ReactJS
+)
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -105,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'America/Bogota'
 

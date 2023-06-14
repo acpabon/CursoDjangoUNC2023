@@ -4,7 +4,11 @@
 {% block content %}
     <ul>
         {% for pet in lists %}
-            <li>{{ pet.0 }}</li>
+            <li>
+                <a href="{% url 'app:observations_pet' pet.0 %}">
+                    {{ pet.0  }}
+                </a>
+            </li>
         {% endfor %}
     </ul> 
 {% endblock %}

@@ -6,12 +6,17 @@
 {% endblock %}
 {% block content %}
     {% if display %}
+        <a href="{% url 'locations:departamentos' %}">
+            volver
+        </a>
         <div class="row">
             <div class="col col-4">
                 <ul class="list-group"> 
                     {% for c in cities %}
                         <li class="list-group-item">
-                            {{ c }}
+                            <a href="/locations/departamentos/{{ department }}/{{ c }}">
+                                {{ c }}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
