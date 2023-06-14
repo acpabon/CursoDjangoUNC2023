@@ -32,7 +32,10 @@ def lists_persons(request):
     list_persons = []
     for p in persons:
         name_person = "{} {}".format(p.first_name, p.last_name)
-        list_persons.append(name_person)
+        list_persons.append({
+            "name": name_person,
+            "id": p.id
+        })
     
     context = {
         "list": list_persons
@@ -61,6 +64,7 @@ def detail_person(request, id):
 
     if person:
         context = {
+            "id": person.id,
             "display": True, 
             "nombre": person.first_name + " " + person.last_name, 
             "edad": person.edad, 
@@ -72,6 +76,23 @@ def detail_person(request, id):
         }
     
     template_name = 'myapp/person_detail.html'
+
+    return render(request, template_name, context)
+
+def detail_person_mascota(request, id):
+    person = Person.objects.filter(id=id).first()
+
+    pets = Pet.objects.filter(person=person).all()
+
+    lists_pets = []
+    for p in pets:
+        lists_pets.append([p.name, p.age, p.person, p.specie])
+
+    context = {
+        "lists": lists_pets
+    }
+
+    template_name = 'myapp/pet_list.html'
 
     return render(request, template_name, context)
 
