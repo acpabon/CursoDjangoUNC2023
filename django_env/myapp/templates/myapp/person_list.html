@@ -3,8 +3,12 @@
 {% block title_content %} Personas {% endblock %}
 {% block content %}
     <ul>
-        {% for persona in  list%}
-            <li>{{ persona }}</li>
+        {% for persona in list%}
+            <li>
+                <a href="{% url 'app:persona-detail' persona.id %}">
+                    {{ persona.name }}
+                </a>
+            </li>
         {% endfor %}
     </ul> 
 {% endblock %}

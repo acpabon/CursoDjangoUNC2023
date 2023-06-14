@@ -3,6 +3,9 @@
 {% block title_content %} Detalle de personas {% endblock %}
 {% block content %}
     {% if display == True %}
+        <a href="{% url 'app:persona-detail-mascotas' id %}">
+            ver mascotas
+        </a>
         <table class="table">
             <thead>
                 <tr>
