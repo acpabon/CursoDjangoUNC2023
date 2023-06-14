@@ -1,17 +1,23 @@
 {% extends 'base.html' %}
 {% block title_content %} 
+<a class='btn btn-primary' href="{% url 'locations:departamentos' %}">
+    volver
+</a>
     Listado de ciudades por Depatamento
     <br/ >
     {{ department }}
 {% endblock %}
 {% block content %}
+
     {% if display %}
         <div class="row">
             <div class="col col-4">
                 <ul class="list-group"> 
                     {% for c in cities %}
                         <li class="list-group-item">
-                            {{ c }}
+                            <a href="{% url 'locations:barrios' department c %}">
+                                {{ c }}
+                            </a>
                         </li>
                     {% endfor %}
                 </ul>
