@@ -15,3 +15,24 @@ class Mascot(models.Model):
 
     def __str__(self) -> str:
         return "{}".format(self.name)
+
+# Model specie
+class Specie(models.Model):
+    kinds = [
+        ("D", "Domestico"),
+        ("W", "Silvestre")
+    ]
+    name = models.CharField(max_length=50)
+    kind = models.CharField(max_length=1, choices=kinds, default="D")
+
+    def __str__(self) -> str:
+        return "{}-{}".format(self.name, self.get_kind_display())
+    
+class Observation(models.Model):
+    pet = models.ForeignKey(Mascot, on_delete=models.CASCADE)
+    description = models.TextField()
+    date = models.DateTimeField()
+    file = models.FileField()
+
+    def __str__(self) -> str:
+        return "{} - {} - {}".format(self.pet.name, self.description[0:20], self.date)

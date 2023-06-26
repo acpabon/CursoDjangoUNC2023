@@ -1,7 +1,23 @@
 from django.shortcuts import render
 from locations.models import Department, City, District
 
-# Create your views here.
+from rest_framework import viewsets, permissions
+from .serializers import DepartmentSerializer, CitySerializer, DistrictSerializer
+
+class DepartmentViewSet(viewsets.ModelViewSet):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class CityViewSet(viewsets.ModelViewSet):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class DistrictViewSet(viewsets.ModelViewSet):
+    queryset = District.objects.all()
+    serializer_class = DistrictSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 def all(request):
     #data = District.objects.select_related('city_id')
@@ -86,3 +102,4 @@ def barrios(request, name_department, name_city):
     
     template_name = 'locations/barrios.html'
     return render(request, template_name, context)
+
